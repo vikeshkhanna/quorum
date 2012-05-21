@@ -1,0 +1,94 @@
+<html>
+<head>
+<script type="text/javascript" >
+
+// courtesy - http://www.fienipa.com/blog/controlling-desktop-notifications-chrome-extensions
+//function to get selected text from notification's querystring
+
+function fromQString(){
+	var selText = [];
+	var qString = window.location.search;
+	
+	if(qString.indexOf("?") == 0)
+	{
+		qString = qString.substring(1);
+	}
+
+	qComponents = qString.split("&");
+	
+	for(var i=0; i<qComponents.length; i++)
+	{
+		qValue = qComponents[i].split("=");
+
+		if(qValue[0] == "body")
+			selText.push(decodeURIComponent(qValue[1]));
+	}
+	
+	return selText;
+}
+
+//function to populate notification with selected text
+function populate(){
+	var content = fromQString();
+	var target = document.getElementById('content');
+	target.innerHTML = content;
+}
+</script>
+
+
+<style>
+
+body
+{
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+	font-size:12px;
+}
+
+a:link, a:visited, a:active
+{
+	text-decoration:none;
+	font-weight:bold;
+	color:black;
+}	
+
+a:hover
+{
+	text-decoration:underline;
+}
+
+div
+{
+	display:block;
+}
+
+body:hover
+{
+	background-color:#eeeeff;	
+	cursor: pointer;
+}
+
+table tr td
+{
+	font-size:12px;	
+}
+
+</style>
+
+</head>
+
+<body onload="populate()">
+
+<table>
+<tr>
+	<td>
+		<img src="images/icon48.png" style="padding:5px" />
+	</td>
+
+	<td>
+		<div id="content" style="padding:5px;"> </div>
+	</td>
+</tr>
+</table>
+
+</body>
+</html>

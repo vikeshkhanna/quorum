@@ -1,0 +1,22 @@
+{
+  "name": "Quorum",
+  "version": "1.0",
+  "description": "Quora Notifications and Messages for Chrome.",
+
+  "browser_action": {
+    "default_icon": "images/icon.png",  
+    "default_title": "Quora",    
+    "default_popup":"popup.html" 
+ },
+  
+  "background_page": "background.html",
+  "permissions": ["tabs", "http://api.quora.com/","notifications"],
+   
+   "icons": {
+    "16":"images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png",
+    "256": "images/icon256.png"
+  }
+
+}
