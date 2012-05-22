@@ -7,6 +7,9 @@
 {
 	chrome.extension.sendRequest({"notifs":true}, function(response) {
 		var notifs = response['notifs'];
+		var n_count = response['n_count'];
+		var m_count = response['m_count'];
+
 		var container = document.getElementById('container');
 
 		for(var i=0;i<notifs.length; ++i)
@@ -26,8 +29,20 @@
 		{
 			var element = document.createElement('img');
 			element.src = "images/empty.png";
+			element.style.cursor = "pointer";
+			element.title = "But there's always something @ Quora";			
+			element.onclick = function()
+			{
+				window.open("http://quora.com");
+			}
 			container.appendChild(element);
-		}					 
+		}
+
+		var num_notifs = document.getElementById("num_notifs")
+		var num_messages = document.getElementById("num_messages");
+		
+		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' target='_blank'>Notifications<strong><br />" + n_count + "</strong></a>";
+		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' target='_blank'>Messages<strong><br />" + m_count + "</strong></a>";	
 	});
 
 	
@@ -75,17 +90,50 @@ a:hover
 	overflow: auto;
 }
 
+.counter
+{
+	padding:10px;
+	color:white;
+	background-color:#A80000;
+	height:46px;
+}
+
+.counter a
+{
+	color:white;
+	font-size:12px;
+	height:auto;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div id="container">
+<table style="padding:10px">
+<tr>
+	<td style="padding-right:10px;">
+		<a href="http://www.quora.com" target="_blank"><img src="images/quora-logo.png" /></a>
+	</td>
 
+	<td style="padding-right:5px">
+		<div class="counter" id="num_notifs">	
+		</div>
+	<td>
+
+	<td>
+		<div class="counter" id="num_messages">
+		</div>
+	</td>
+</tr>
+
+</table>
+
+<div id="container">
 </div>
 
-<div style="padding:10px;font-size:10px;">
+<div style="padding:10px;font-size:10px;margin:0px, 10px, 0px, 10px">
 	Quorum was created by <a href="http://www.facebook.com/vikesh.khanna/" target="_blank">Vikesh</a></div>
 </body>
 </html>

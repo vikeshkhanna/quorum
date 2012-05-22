@@ -8,6 +8,7 @@
 	var POLLING_FREQUENCY = 2000;
 	var xhr = new XMLHttpRequest();
 	var last_n_count = 0;
+	var last_m_count = 0;
 	var last_unseen = [];
 	var first_response = true;
 	
@@ -26,8 +27,8 @@
 		if(timer_on)
 		{
 			// fetch data 
-			request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
-			//request("synthetic.json");
+			//request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
+			request("synthetic.json");
 			setTimeout(fetchData, POLLING_FREQUENCY)
 		}
 	}
@@ -106,6 +107,8 @@
 			}
 
 			last_unseen = n_unseen.slice(0);
+			last_n_count = last_unseen.length;
+			last_m_count = m_count;
 			chrome.browserAction.setBadgeText({text: badgeText});
 			first_response = false;
 			
@@ -140,7 +143,7 @@
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
 		if(request["notifs"])
 		{
-			sendResponse({'notifs':last_unseen});
+			sendResponse({'notifs':last_unseen,'n_count':last_n_count,'m_count':last_m_count});
 		}
 	});
 
