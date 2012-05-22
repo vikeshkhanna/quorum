@@ -1,0 +1,91 @@
+<html>
+<head>
+
+<script type="text/javascript">
+
+(function()
+{
+	chrome.extension.sendRequest({"notifs":true}, function(response) {
+		var notifs = response['notifs'];
+		var container = document.getElementById('container');
+
+		for(var i=0;i<notifs.length; ++i)
+		{
+			var element = document.createElement('div');
+			element.innerHTML = notifs[i];
+			element.className = "notification";
+			container.appendChild(element);			
+		
+			element.onclick = function()
+			{
+				window.open("http://quora.com/notifications");
+			}
+		}
+
+		if(notifs.length == 0)
+		{
+			var element = document.createElement('img');
+			element.src = "images/empty.png";
+			container.appendChild(element);
+		}					 
+	});
+
+	
+}());
+
+</script>
+
+<style>
+
+body
+{
+ 	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        font-size:12px;
+} 
+
+a:link, a:visited, a:active
+{
+	text-decoration:none;
+	font-weight:bold;
+	color:black;
+}
+
+a:hover
+{
+	text-decoration:underline;
+}
+
+.notification
+{
+	background-color:#eeeeee;
+	padding:10px;
+	margin:10px;
+}
+
+.notification:hover
+{
+	background-color:#eeeeff;
+	cursor:pointer;
+}
+
+#container
+{
+	width:400px;
+	max-height:400px;
+	overflow: auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="container">
+
+</div>
+
+<div style="padding:10px;font-size:10px;">
+	Quorum was created by <a href="http://www.facebook.com/vikesh.khanna/" target="_blank">Vikesh</a></div>
+</body>
+</html>

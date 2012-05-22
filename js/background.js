@@ -26,8 +26,8 @@
 		if(timer_on)
 		{
 			// fetch data 
-			//request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
-			request("synthetic.json");
+			request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
+			//request("synthetic.json");
 			setTimeout(fetchData, POLLING_FREQUENCY)
 		}
 	}
@@ -82,14 +82,17 @@
 			var n_unseen = notifs.unseen;
 			var m_unseen = inbox.unseen;
 
+			var toast_cnt = 0;
+
 			if(n_count > 0)
 			{
 				if(!first_response)
 				{
-					for(var i=0; i<n_count; i++)	
+					for(var i=0; i<n_unseen.length; ++i)	
 					{
-						if(last_unseen.indexOf(n_unseen[i]) == -1)
+						if(toast_cnt < 5 && last_unseen.indexOf(n_unseen[i]) == -1)
 						{
+							++toast_cnt;
 							showToast(n_unseen[i]);
 						}
 					}
@@ -105,6 +108,9 @@
 			last_unseen = n_unseen.slice(0);
 			chrome.browserAction.setBadgeText({text: badgeText});
 			first_response = false;
+			
+			// send message to other pages
+			//chrome.extension.sendRequest({'notifs':last_unseen}, function(response){});
 		}
 		else
 		{
@@ -130,4 +136,12 @@
 		noticeURL = chrome.extension.getURL('notification.html') + "?" + queryString;
 		return noticeURL;
 	}
+
+	chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
+		if(request["notifs"])
+		{
+			sendResponse({'notifs':last_unseen});
+		}
+	});
+
 }());
