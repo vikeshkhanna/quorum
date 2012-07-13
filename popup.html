@@ -1,3 +1,4 @@
+
 <html>
 <head>
 
@@ -25,11 +26,13 @@
 			}
 		}
 
-		if(notifs.length == 0)
+		if(n_count == 0)
 		{
 			var element = document.createElement('img');
 			element.src = "images/empty.png";
 			element.style.cursor = "pointer";
+			element.style.marginLeft = "20px";
+	
 			element.title = "But there's always something @ Quora";			
 			element.onclick = function()
 			{
@@ -41,8 +44,8 @@
 		var num_notifs = document.getElementById("num_notifs")
 		var num_messages = document.getElementById("num_messages");
 		
-		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' target='_blank'>Notifications<strong><br />" + n_count + "</strong></a>";
-		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' target='_blank'>Messages<strong><br />" + m_count + "</strong></a>";	
+		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' target='_blank'>Notifications</a><br /><span>" + n_count + "</span>";
+		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' target='_blank'>Messages<strong></a><br /><span>" + m_count + "</span>";	
 	});
 
 	
@@ -56,6 +59,7 @@ body
 {
  	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
         font-size:12px;
+	margin:0px;
 } 
 
 a:link, a:visited, a:active
@@ -93,6 +97,7 @@ a:hover
 #container
 {
 	width:400px;
+	margin-bottom:10px;
 	max-height:400px;
 	overflow: auto;
 }
@@ -105,11 +110,29 @@ a:hover
 	height:46px;
 }
 
+
+.counter span
+{
+	font-size:26px;
+	font-weight:bold;
+}
+
 .counter a
 {
 	color:white;
 	font-size:12px;
 	height:auto;
+}
+
+#header
+{
+	background-color:#eeeeee;
+	margin-bottom:10px;
+}
+
+hr
+{
+	margin:0px;
 }
 
 </style>
@@ -118,6 +141,7 @@ a:hover
 
 <body>
 
+<div id="header">
 <table style="padding:10px">
 <tr>
 	<td style="padding-right:10px;">
@@ -134,13 +158,13 @@ a:hover
 		</div>
 	</td>
 </tr>
-
 </table>
-
+</div>
+<hr />
 <div id="container">
 </div>
-
-<div style="padding:10px;font-size:10px;margin:0px, 10px, 0px, 10px">
+<hr />
+<div style="padding:10px;margin-top:10px;font-size:10px;margin:0px, 10px, 0px, 10px">
 	Quorum was created by <a href="http://www.facebook.com/vikesh.khanna/" target="_blank">Vikesh</a></div>
 </body>
 </html>

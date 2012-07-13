@@ -5,7 +5,8 @@
 (function(){
 	var initialized = false;
 	var timer_on = false;
-	var POLLING_FREQUENCY = 2000;
+	var POLLING_FREQUENCY = 4000;
+	var MAX_UNSEEN = 100;
 	var xhr = new XMLHttpRequest();
 	var last_n_count = 0;
 	var last_m_count = 0;
@@ -27,8 +28,8 @@
 		if(timer_on)
 		{
 			// fetch data 
-			//request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
-			request("synthetic.json");
+			request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
+			//request("synthetic.json");
 			setTimeout(fetchData, POLLING_FREQUENCY)
 		}
 	}
@@ -46,7 +47,20 @@
 				console.debug("<quorum> [error] " + error);
 			}
 			
-			xhr.open("GET", url, true);
+			var bustCache;
+			
+			if(url.indexOf("?") == -1)
+			{
+				
+				bustCache = "?bustCache=" + Math.random();
+			}
+			else
+			{
+				bustCache = "&bustCache=" + Math.random();
+			}
+
+			url += bustCache;
+			xhr.open("GET", url, false); 
 			xhr.send(null);
 		}
 		catch(e)
@@ -58,6 +72,7 @@
 	/* update pop */
 	function processResponse()
 	{
+
 		if(xhr.readyState!=4)
 			return;
 		
@@ -85,6 +100,15 @@
 
 			var toast_cnt = 0;
 
+			// Dynamically adjust the buffer max. 
+			// If n_unseen.length > MAX_UNSEEN, it will lead
+			// to rapid changes in last_unseen on every call. 
+
+			if(n_unseen.length > MAX_UNSEEN)
+			{
+				MAX_UNSEEN = n_unseen.length;
+			}
+
 			if(n_count > 0)
 			{
 				if(!first_response)
@@ -95,25 +119,39 @@
 						{
 							++toast_cnt;
 							showToast(n_unseen[i]);
+							addToUnseen(n_unseen[i])
 						}
 					}
-				}						
+				}			
+				else
+				{
+					for(var i=0; i<n_unseen.length; ++i)
+					{
+						addToUnseen(n_unseen[i]);
+					}
+				}
+
 			}	
 
-			if(n_count > 0 || m_count > 0)
+
+			var txt = "";
+
+			if(n_count > 0)
 			{
-				txt = String(n_count) + "/" + String(m_count);
-				badgeText = (txt.length > 4 ? "---" : txt);
+				txt = String(n_count);
 			}
 
-			last_unseen = n_unseen.slice(0);
-			last_n_count = last_unseen.length;
+			if(m_count > 0)
+			{
+				txt = String(n_count) + "/" + String(m_count);
+			}
+
+			badgeText = (txt.length > 4 ? "---" : txt);
+		
+			last_n_count = n_count;
 			last_m_count = m_count;
 			chrome.browserAction.setBadgeText({text: badgeText});
 			first_response = false;
-			
-			// send message to other pages
-			//chrome.extension.sendRequest({'notifs':last_unseen}, function(response){});
 		}
 		else
 		{
@@ -121,10 +159,18 @@
 		}
 	}
 
+	function addToUnseen(item)
+	{
+		if(last_unseen.length == MAX_UNSEEN)
+		{
+			last_unseen.shift();
+		}
+
+		last_unseen.push(item);
+	}
+
 	function showToast(body)
 	{
-		//message = "<html><head><title>Quorum</title></head><body><div>Hello</div></body></html>";
-		//alert(formURL(body));
 		var notification = window.webkitNotifications.createHTMLNotification(formURL(body));
 		notification.show();
 
@@ -140,11 +186,11 @@
 		return noticeURL;
 	}
 
+	// Send message to popup
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
 		if(request["notifs"])
 		{
 			sendResponse({'notifs':last_unseen,'n_count':last_n_count,'m_count':last_m_count});
 		}
 	});
-
 }());
