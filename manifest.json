@@ -1,6 +1,6 @@
 {
   "name": "Quorum",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Quora Notifications and Messages for Chrome.",
 
   "browser_action": {
