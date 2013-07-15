@@ -29,7 +29,7 @@
 		{
 			// fetch data 
 			request("http://www.quora.com/api/logged_in_user?fields=inbox,notifs");
-			//request("synthetic.json");
+			// request("synthetic.json");
 			setTimeout(fetchData, POLLING_FREQUENCY)
 		}
 	}
@@ -171,7 +171,7 @@
 
 	function showToast(body)
 	{
-		var notification = window.webkitNotifications.createHTMLNotification(formURL(body));
+		var notification = window.webkitNotifications.createNotification("images/icon48.png","Quorum", body);
 		notification.show();
 
 		notification.onclick = function()  { window.open("http://www.quora.com/notifications"); }
