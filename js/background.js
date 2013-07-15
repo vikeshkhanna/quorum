@@ -28,7 +28,7 @@
 		if(timer_on)
 		{
 			// fetch data 
-			request("http://api.quora.com/api/logged_in_user?fields=inbox,notifs");
+			request("http://www.quora.com/api/logged_in_user?fields=inbox,notifs");
 			//request("synthetic.json");
 			setTimeout(fetchData, POLLING_FREQUENCY)
 		}
@@ -65,7 +65,7 @@
 		}
 		catch(e)
 		{
-			console.error("<quorum> [error] " + error);
+			console.error("<quorum> [error] " + e);
 		}
 	}
 
