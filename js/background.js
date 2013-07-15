@@ -1,7 +1,6 @@
 /*
 @author - Vikesh Khanna
 */
-
 (function(){
 	var initialized = false;
 	var timer_on = false;
@@ -171,14 +170,20 @@
 
 	function showToast(body)
 	{
-		var notification = window.webkitNotifications.createNotification("images/icon48.png","Quorum", body);
+		var notification = window.webkitNotifications.createNotification("images/icon48.png","Quorum", strip(body));
 		notification.show();
 
 		notification.onclick = function()  { window.open("http://www.quora.com/notifications"); }
 		setTimeout(function(){ notification.cancel(); }, 8000);
 	}
 	
-	
+	function strip(body)
+	{
+		var tmp = document.createElement("DIV");
+   		tmp.innerHTML = body;
+   		return tmp.textContent || tmp.innerText || "";
+	}	
+
 	function formURL(item)
 	{
 		var queryString = "body" + "=" + encodeURIComponent(item);
