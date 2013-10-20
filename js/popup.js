@@ -22,26 +22,17 @@
 
 		if(n_count == 0)
 		{
-			var element = document.createElement('img');
-			element.src = "images/empty.png";
-			element.style.cursor = "pointer";
-			element.style.marginLeft = "20px";
-	
-			element.title = "But there's always something @ Quora";			
-			element.onclick = function()
-			{
-				window.open("http://quora.com");
-			}
+			var element = document.createElement('p');
+
+			element.textContent = "No new notifications.";
 			container.appendChild(element);
 		}
 
 		var num_notifs = document.getElementById("num_notifs")
 		var num_messages = document.getElementById("num_messages");
-		
-		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' target='_blank'>Notifications</a><br /><span>" + n_count + "</span>";
-		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' target='_blank'>Messages<strong></a><br /><span>" + m_count + "</span>";	
+		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' title='View Notifications' target='_blank'>Notifications<br /><span>" + n_count + "</span></a>";
+		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' title='View Messages' target='_blank'>Messages<strong><br /><span>" + m_count + "</span></a>";	
 	});
-
-	
 }());
+
 
