@@ -30,8 +30,8 @@
 
 		var num_notifs = document.getElementById("num_notifs")
 		var num_messages = document.getElementById("num_messages");
-		num_notifs.innerHTML = "<a href='http://www.quora.com/notifications' title='View Notifications' target='_blank'>Notifications<br /><span>" + n_count + "</span></a>";
-		num_messages.innerHTML = "<a href='http://www.quora.com/inbox' title='View Messages' target='_blank'>Messages<strong><br /><span>" + m_count + "</span></a>";	
+		num_notifs.innerHTML = "Notifications <br /><span>" + n_count + "</span>";
+		num_messages.innerHTML = "Messages <br /><span>" + m_count + "</span>";	
 	});
 }());
 
