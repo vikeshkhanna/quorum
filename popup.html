@@ -8,20 +8,28 @@
 body
 {
  	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-        font-size:12px;
+    font-size:12px;
 	margin:0px;
 } 
+
+img
+{
+	-webkit-transition: all .25s linear .1s;
+	transition: all .25s linear .1s;
+}
+
+img:hover
+{
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
 
 a:link, a:visited, a:active
 {
 	text-decoration:none;
 	font-weight:bold;
-	color: black;	
-}
-
-a:hover
-{
-	text-decoration:underline;
+	color: black;
+	outline: none;	
 }
 
 .notification
@@ -33,15 +41,14 @@ a:hover
 
 .notification:hover
 {
-	background-color:#A80000;
+	background-color:#888888;
 	color:white;
 	cursor:pointer;
 }
 
-.notification:hover  a
+.notification:hover a
 {
 	color:white;
-
 }
 
 #container
@@ -55,9 +62,12 @@ a:hover
 .counter
 {
 	padding:10px;
-	color:white;
-	background-color:#A80000;
+	background-color:#474747;
 	height:46px;
+	width: 79px;
+	text-align: center;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
 }
 
 
@@ -70,8 +80,14 @@ a:hover
 .counter a
 {
 	color:white;
+	text-shadow: 0px 2px 3px #555;
 	font-size:12px;
 	height:auto;
+}
+
+.counter a:hover
+{
+	color: #FFFACD;
 }
 
 #header
@@ -80,9 +96,21 @@ a:hover
 	margin-bottom:10px;
 }
 
+#facebook:hover
+{
+	text-decoration: underline;
+}
+
 hr
 {
-	margin:0px;
+	margin: 0px;
+	border-style: dashed;
+	border-color: #aaaaaa;
+}
+
+p
+{
+	margin-left:10px;
 }
 
 </style>
@@ -95,7 +123,7 @@ hr
 <table style="padding:10px">
 <tr>
 	<td style="padding-right:10px;">
-		<a href="http://www.quora.com" target="_blank"><img src="images/quora-logo.png" /></a>
+		<a href="http://www.quora.com" title="Go to Quora" target="_blank"><img src="images/quora-logo.png" /></a>
 	</td>
 
 	<td style="padding-right:5px">
@@ -115,6 +143,6 @@ hr
 </div>
 <hr />
 <div style="padding:10px;margin-top:10px;font-size:10px;margin:0px, 10px, 0px, 10px">
-	Quorum was created by <a href="http://www.facebook.com/vikesh.khanna/" target="_blank">Vikesh</a></div>
+	Quorum was created by <a id="facebook" href="http://www.facebook.com/vikesh.khanna/" target="_blank">Vikesh</a></div>
 </body>
 </html>
